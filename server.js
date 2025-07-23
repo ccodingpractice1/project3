@@ -5,7 +5,7 @@ const express = require('express');
 const path = require('path');  // for handling file paths
 
 const app = express();
-const port = process.env.PORT || 3000;  // use env var or default to 4000
+const port = process.env.PORT || 4000;  // use env var or default to 4000
 
 // Set the static directory to serve files from
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,5 +25,14 @@ app.get("/customers", async (req, res) => {
     }   
 });
 
+app.get("/reset", async (req, res) => {
+    const [result, err] = await da.resetCustomers();
+    if(result){
+        res.send(result);
+    }else{
+        res.status(500);
+        res.send(err);
+    }   
+});
 
 
