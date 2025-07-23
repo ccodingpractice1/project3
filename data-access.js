@@ -13,7 +13,13 @@ async function dbStartup() {
 }
 
 async function getCustomers() {
-    return await collection.find().toArray();
+    try {
+        const customers = await collection.find().toArray();
+        return [customers, null];
+    } catch (err) {
+        console.log(err.message);
+        return [null, err.message];
+    }
 }
 
 dbStartup();
